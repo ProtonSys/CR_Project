@@ -61,14 +61,26 @@ function result = trainEvaluateNNConfig(X, T, cfg, nRuns, saveConfusion, prefixN
         net.divideParam.valRatio   = cfg.valRatio;
         net.divideParam.testRatio  = cfg.testRatio;
 
+        % -------------------------------------------------------------
         % Parâmetros de treino
+        % -------------------------------------------------------------
         net.trainParam.epochs = cfg.epochs;
 
+        % Learning rate apenas para algoritmos compatíveis
         if strcmp(cfg.trainFcn, 'traingd')
             net.trainParam.lr = cfg.lr;
         end
 
+        % Não mostrar janela gráfica de treino
         net.trainParam.showWindow = false;
+
+        % Early stopping
+        net.trainParam.max_fail = 6;
+
+        % -------------------------------------------------------------
+        % Treino da rede
+        % -------------------------------------------------------------
+        [net, tr] = train(net, X, T);
 
         % -------------------------------------------------------------
         % Treino da rede

@@ -63,7 +63,7 @@ trainAndSaveTemperatureNN(T_train_raw, modelFile);
 % -------------------------------------------------------------------------
 % Definição dos conjuntos de pesos
 % -------------------------------------------------------------------------
-weightsA = getAttributeWeights();
+weightsA = getAttributesWeights();
 
 % Pesos uniformes
 weightsB = ones(1,14) / 14;

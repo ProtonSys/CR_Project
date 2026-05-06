@@ -52,6 +52,8 @@ X = buildInputMatrix(T);
 % -------------------------------------------------------------------------
 configs = createNNConfigGrid();
 
+tic;
+
 resultsTable = table();
 
 % -------------------------------------------------------------------------
@@ -127,3 +129,6 @@ writetable( ...
 
 % Mostrar melhores configurações
 disp(resultsTable(1:min(10,height(resultsTable)), :));
+
+% Mostra tempo decorrido
+fprintf('\nTempo total: %.2f minutos\n', toc/60);

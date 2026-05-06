@@ -49,6 +49,7 @@ function configs = createNNConfigGrid()
     % Este algoritmo tende a apresentar boa generalização.
     trainFcns = {
         'trainscg'
+        'trainnlm'
         };
 
     % ---------------------------------------------------------------------
@@ -73,17 +74,14 @@ function configs = createNNConfigGrid()
     %   15% teste
     divisions = [
         0.70 0.15 0.15
-        0.80 0.10 0.10
+        '.8
     ];
 
     % ---------------------------------------------------------------------
     % Número máximo de épocas
     % ---------------------------------------------------------------------
     % Cada época corresponde a uma passagem completa pelos dados de treino.
-    epochsList = [
-        50
-        100
-        ];
+    epochsList = [100];
 
     % ---------------------------------------------------------------------
     % Learning rates
