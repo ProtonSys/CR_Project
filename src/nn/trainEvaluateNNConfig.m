@@ -129,4 +129,16 @@ function result = trainEvaluateNNConfig(X, T, cfg, nRuns, saveConfusion, prefixN
         saveas(fig, sprintf('%s_plotconfusion.png', prefixName));
         close(fig);
     end
+
+
+    % Guardar gráfico de performance do treino
+    if saveConfusion
+        figPerf = figure('Visible','off');
+        plotperform(tr);
+        filenamePerf = sprintf('%s_plotperform.png', prefixName);
+        filepathPerf = fullfile('results', filenamePerf);
+        saveas(figPerf, filepathPerf);
+        close(figPerf);
+
+    end
 end
