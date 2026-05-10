@@ -134,6 +134,34 @@ end
 resultsTable = sortrows(resultsTable, 'MeanTest', 'descend');
 
 % -------------------------------------------------------------------------
+% Seleção da melhor rede
+% -------------------------------------------------------------------------
+
+bestNetwork = resultsTable(1,:);
+
+disp('Melhor configuração encontrada:');
+
+disp(bestNetwork);
+
+fprintf('\nMelhor accuracy de teste: %.2f%%\n', ...
+    bestNetwork.MeanTest);
+
+fprintf('Melhor topologia: %s\n', ...
+    bestNetwork.HiddenLayers);
+
+% -------------------------------------------------------------------------
+% Guardar Top 5 melhores redes
+% -------------------------------------------------------------------------
+
+top5 = resultsTable(1:min(5,height(resultsTable)), :);
+
+writetable( ...
+    top5, ...
+    fullfile('results', 'top5_networks.csv'));
+
+fprintf('\nTop 5 redes guardado com sucesso.\n');
+
+% -------------------------------------------------------------------------
 % Criar pasta de resultados caso não exista
 % -------------------------------------------------------------------------
 if ~exist('results', 'dir')
@@ -237,35 +265,49 @@ fprintf('\nTempo total: %.2f minutos\n', toc/60);
 % -------------------------------------------------------------------------
 % Gráfico comparativo das accuracies
 % -------------------------------------------------------------------------
-figure;
 
-bar(resultsTable.MeanTest);
+fig = figure('Color', 'white');
+
+bar(resultsTable.MeanTest, ...
+    'FaceColor', [0.2 0.4 0.8]);
+
+% Labels do eixo X
+xticks(1:height(resultsTable));
 
 xticklabels(string(resultsTable.ConfigName));
 
 xtickangle(45);
 
+% Títulos
 xlabel('Configurações de Rede Neural');
 
 ylabel('Precisão Média de Teste (%)');
 
 title('Comparação das Precisões Médias de Teste');
 
+% Grelha
 grid on;
+
+% Ajuste do tamanho
+set(gca, ...
+    'FontSize', 8, ...
+    'Color', 'white');
+
+% Ajuste automático da janela
+set(fig, ...
+    'Position', [100 100 1400 700]);
 
 drawnow;
 
-saveas(gcf, ...
-    fullfile('results', 'accuracy_comparison.png'));
-
-close(gcf);
+pause(1);
 
 % -------------------------------------------------------------------------
 % Guardar gráfico
 % -------------------------------------------------------------------------
-saveas(gcf, ...
-    fullfile('results', 'accuracy_comparison.png'));
+exportgraphics(gca, ...
+    fullfile('results', 'accuracy_comparison.png'), ...
+    'Resolution', 300);
 
-close(gcf);
+close(fig);
 
 fprintf('\nGráfico comparativo guardado com sucesso.\n');
